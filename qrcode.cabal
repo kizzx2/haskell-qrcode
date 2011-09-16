@@ -1,0 +1,35 @@
+name:                qrcode
+version:             0.1
+synopsis:            QR Code library in pure Haskell
+license:             BSD3
+license-file:        LICENSE
+author:              Chris Yuen
+maintainer:          chris@kizzx2.com
+category:            Codec
+build-type:          Simple
+cabal-version:       >=1.2
+description:
+    QR Code encoder (and future decoder) in pure Haskell.
+
+data-files:          TODO Example.hs README.markdown
+
+flag Prof
+    default: False
+
+library
+  exposed-modules: Codec.Binary.QRCode
+
+  other-modules: Codec.Binary.QRCode.Blocks,
+                 Codec.Binary.QRCode.FormatInfo,
+                 Codec.Binary.QRCode.GaloisField,
+                 Codec.Binary.QRCode.Masks,
+                 Codec.Binary.QRCode.Matrix,
+                 Codec.Binary.QRCode.Placement,
+                 Codec.Binary.QRCode.Spec,
+                 Codec.Binary.QRCode.Utils,
+                 Codec.Binary.QRCode.VersionInfo,
+                 Codec.Binary.QRCode.Modes.Numeric,
+                 Codec.Binary.QRCode.Modes.Alphanumeric
+  
+  build-depends: base >= 4 && < 5, containers, array, mtl, vector
+  ghc-options: -Wall
