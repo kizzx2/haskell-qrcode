@@ -12,7 +12,7 @@
 --
 -- Example
 --
--- > encode (version 1) M Alphanumeric "hello world"
+-- > encode (fromJust $ version 1) M Alphanumeric "hello world"
 
 module Codec.Binary.QRCode
     (
