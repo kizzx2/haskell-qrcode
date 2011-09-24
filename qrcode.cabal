@@ -13,6 +13,10 @@ description:
 
 data-files:          TODO Example.hs README.markdown
 
+source-repository head
+  type: git
+  location: https://github.com/kizzx2/haskell-qrcode
+
 flag Prof
     default: False
 
