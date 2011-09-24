@@ -7,7 +7,7 @@ author:              Chris Yuen
 maintainer:          chris@kizzx2.com
 category:            Codec
 build-type:          Simple
-cabal-version:       >=1.2
+cabal-version:       >=1.6
 description:
     QR Code encoder (and future decoder) in pure Haskell.
 
