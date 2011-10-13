@@ -10,7 +10,7 @@ chars :: [Char]
 chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-.:"
 
 table :: [(Char, Int)]
-table = zip chars [0..41]
+table = zip chars [0..44]
 
 convert :: Char -> Maybe Int
 convert = flip lookup table
