@@ -5,7 +5,7 @@ import Numeric
 import Codec.Binary.QRCode.Utils
 import Codec.Binary.QRCode.Spec
 
-safeRead :: Num a => String -> Maybe a
+safeRead :: (Eq a, Num a) => String -> Maybe a
 safeRead x = case readDec x of
     [] -> Nothing
     ((x',_):_) -> Just x'
