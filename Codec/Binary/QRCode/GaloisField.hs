@@ -38,7 +38,7 @@ gfMinus :: GFElement -> GFElement -> GFElement
 gfMinus = gfAdd
 
 gfALogs :: [Int]
-gfALogs = 1:(map f gfALogs)
+gfALogs = 1 : map f gfALogs
     where
         f x = let x' = x * 2 in
             if x' >= qrGFSize
@@ -92,7 +92,7 @@ gfpOrder :: GFPolynomial -> Int
 gfpOrder (GFPolynomial terms) = length terms - 1
 
 gfZeroes :: [GFElement]
-gfZeroes = map GFElement (repeat 0);
+gfZeroes = repeat (GFElement 0)
 
 gfpEnlarge :: Int -> GFPolynomial -> GFPolynomial
 gfpEnlarge n p@(GFPolynomial terms)
@@ -134,7 +134,7 @@ gfpQuotRem dividend divisor = go dividend (GFPolynomial [])
         divHead = gfpHead divisor
         go currentDividend q
             | order < 0 = (q, currentDividend)
-            | gfpOrder nextDividend == 0 = (q', (GFPolynomial []))
+            | gfpOrder nextDividend == 0 = (q', GFPolynomial [])
             | otherwise =
                 go nextDividend (q |+| currentTerm)
             where

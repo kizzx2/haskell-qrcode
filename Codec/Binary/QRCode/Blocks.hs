@@ -28,7 +28,7 @@ interleave ver@(Version v) ecl rawCoded = result'
         ecCodewords :: [[BitStream]]
         ecCodewords = map snd codewordPairs
 
-        padRemainderBits i' = i' ++ (take (qrRemainderBits info) "0000000")
+        padRemainderBits i' = i' ++ take (qrRemainderBits info) "0000000"
 
         info = qrGetInfo ver
         result = concat $ concat (transpose dataCodewords) ++ concat (transpose ecCodewords)
@@ -61,7 +61,7 @@ genCodewords ver@(Version v) ecl input = (toCodewords dataCodewords, toCodewords
         numErrorWords = qrNumErrorCodewordsPerBlock v ecl
         genPoly = mkPolynomial $ qrGenPoly numErrorWords
 
-        poly = toECPoly ver ecl $ dataCodewords
+        poly = toECPoly ver ecl dataCodewords
         errorCodewords = gfpShowBin $ snd $ gfpQuotRem poly genPoly
 
 mkDataCodewords :: Version -> ErrorLevel -> BitStream -> BitStream
@@ -71,7 +71,7 @@ mkDataCodewords (Version v) errLevel = fillPadCodewords . padBits . terminate
         terminate i' = i' ++ take (numDataBits - length i') "0000"
         padBits i' = i' ++ take padLength "0000000"
             where padLength = 8 - (length i' `rem` 8)
-        fillPadCodewords i' = take numDataBits (i' ++ (cycle "1110110000010001"))
+        fillPadCodewords i' = take numDataBits (i' ++ cycle "1110110000010001")
 
 toECPoly :: Version -> ErrorLevel -> BitStream -> GFPolynomial
 toECPoly (Version v) errLevel bitstream = gfpRightPad numErrorWords $ mkPolynomial $ map readBin $ chunksOf 8 bitstream

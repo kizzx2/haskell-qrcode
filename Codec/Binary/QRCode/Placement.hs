@@ -145,10 +145,10 @@ mkRawPath = do
     time <- natural 7
 
     let width = qrGetWidth ver
-        upRowPair = concat . map (replicate 2) $ [0..(width-1)]
+        upRowPair = concatMap (replicate 2) [0..(width-1)]
         downRowPair = reverse upRowPair
 
-        mkCols = concat . concat . map (replicate width) . chunksOf 2
+        mkCols = concat . concatMap (replicate width) . chunksOf 2
         mkRows = concat . cycle
 
         -- rows and cols "before" (to the right of) the vert timing pattern
@@ -219,7 +219,7 @@ versionInfoRegion' f = do
     a <- natural 6
     let width = qrGetWidth ver
         rows = cycle [8..10]
-        cols = concat . map (replicate 3) $ [a..width-1]
+        cols = concatMap (replicate 3) [a..width-1]
     return $ do
         guard $ v >= 7
         zipWith f rows cols
@@ -237,7 +237,7 @@ versionInfoRegions = versionInfoRegionBottomLeft /+/ versionInfoRegionTopRight
 hardcodedDarkModule :: Num t => ReaderQR [(t, Int)]
 hardcodedDarkModule = do
     col <- natural 9
-    return $ [(7,col)]
+    return [(7,col)]
 
 formatInfoRegions :: ReaderQR [(Int, Int)]
 formatInfoRegions = formatInfoRegionHorizontal /+/ formatInfoRegionVertical
@@ -261,7 +261,7 @@ formatInfoRegionVertical = do
     e <- natural 6
     f <- natural 1
 
-    return $ [(row,col) | row <- [a..b] ++ [c..d] ++ [e..f]]
+    return [(row,col) | row <- [a..b] ++ [c..d] ++ [e..f]]
 
 finderPatterns :: ReaderQR [(Int, Int)]
 finderPatterns = finderPatternTopLeft /+/ finderPatternBottomLeft /+/ finderPatternTopRight
@@ -272,21 +272,21 @@ finderPatternTopLeft = do
     ver <- ask
     r' <- natural 8
     let width = qrGetWidth ver
-    return $ [(row,col) | let vals = [r'..(width-1)], row <- vals, col <- vals]
+    return [(row,col) | let vals = [r'..(width-1)], row <- vals, col <- vals]
 
 finderPatternTopRight :: ReaderQR Coords
 finderPatternTopRight = do
     ver <- ask
     r' <- natural 8
     let width = qrGetWidth ver
-    return $ [(row,col) | row <- [r'..width-1], col <- [0..7]]
+    return [(row,col) | row <- [r'..width-1], col <- [0..7]]
 
 finderPatternBottomLeft :: ReaderQR Coords
 finderPatternBottomLeft = do
     ver <- ask
     let width = qrGetWidth ver
     c' <- natural 8
-    return $ [(row,col) | row <- [0..7], col <- [c'..width-1]]
+    return [(row,col) | row <- [0..7], col <- [c'..width-1]]
 
 -- This assumes a bottom-left origin, right to 
 -- left bottom to top path
@@ -339,4 +339,4 @@ alignmentCoords = do
         mkPat (r,c) = [(r',c') | c' <- [c-2..c+2], r' <- [r-2..r+2]]
 
         pats = concatMap mkPat validCenters
-    return $ pats
+    return pats

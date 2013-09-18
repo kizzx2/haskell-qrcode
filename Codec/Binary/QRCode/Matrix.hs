@@ -44,7 +44,7 @@ show2DArray mods = rows
         bound = fst . snd . bounds $ mods
         showFs = amap shows mods
         row r = foldr (.) ("\n"++) [showFs ! (r,col) | col <- reverse [0..bound]]
-        rows = foldr (.) id [row r | r <- reverse [0..bound]] $ ""
+        rows = foldr (.) id [row r | r <- reverse [0..bound]] ""
 
 -- Show Matrix "top-down"
 -- i.e. (0,0) is displayed in bottom right

@@ -22,7 +22,7 @@ convert chunk = showBin `fmap` safeRead chunk
 encode :: Version -> Input -> Maybe BitStream
 encode ver input = ((modeIndicatorBits ++ characterCountBits) ++) `fmap` dataBits
     where
-        dataBits = concat `fmap` sequence (map convert . chunksOf 3 $ input)
+        dataBits = concat `fmap` mapM convert (chunksOf 3 input)
         modeIndicatorBits = "0001"
         characterCountBits = showBinPadded cciLength $ length input
         cciLength = qrLengthOfCCI ver Numeric

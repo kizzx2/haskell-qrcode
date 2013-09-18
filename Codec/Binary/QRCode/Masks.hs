@@ -32,9 +32,7 @@ mkMask cond coords = do
     let width = qrGetWidth ver
     -- FIXME we need to convert a bottom right coord to top left coord, ARGH!
     let unnatural n = width - 1 - n
-        transform (i,j) = case (cond `on` unnatural) i j of
-            True -> Dark
-            False -> Light
+        transform (i,j) = if (cond `on` unnatural) i j then Dark else Light
     return $ map transform coords
 
 mask000, mask001, mask010, mask011, mask100, mask101, mask110, mask111 :: Coords -> ReaderQR Modules
@@ -51,12 +49,12 @@ mask :: Modules -> ReaderQR (Matrix, BitStream)
 mask mods = do
     ver <- ask
     coords <- mkPath
-    masks <- sequence $ [mask000, mask001, mask010, mask011, mask100, mask101, mask110, mask111] <*> (pure coords)
+    masks <- sequence $ [mask000, mask001, mask010, mask011, mask100, mask101, mask110, mask111] <*> pure coords
     let maskRefs = ["000", "001", "010", "011", "100", "101", "110", "111"]
         mkMaskedSym x y = mkSymbol coords ver $ applyMask x y
         syms = zipWith mkMaskedSym (repeat mods) masks
         symsWithRefsScores = zip (map score syms) $ zip syms maskRefs-- (score,(sym,ref))
-        best = head $ sortBy (compare `on` fst) symsWithRefsScores
+        best = minimumBy (compare `on` fst) symsWithRefsScores
     return $ snd best
 
 applyMask :: Modules -> Modules -> Modules
@@ -110,7 +108,7 @@ all2x2Blocks mat = 3 * total
         pairsOfRow n = [((n,x),(n,x+1)) | x <- [0..width-1]]
 
         different = 0
-        bothLight = (-1)
+        bothLight = -1
         bothDark = 1
 
 countFinderRatio :: Num a => [[Module]] -> [[Module]] -> t -> a
@@ -132,7 +130,7 @@ proportionOfDarkModules mat = total
         k = truncate $ abs (0.5 - proportion) / 0.05
 
         proportion :: Double
-        proportion = ((/) `on` fromIntegral) (numDarks mat) (numModules)
+        proportion = ((/) `on` fromIntegral) (numDarks mat) numModules
 
         numModules :: Int
         numModules = (qrmWidth mat + 1) ^ (2 :: Int)
