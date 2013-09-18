@@ -7,4 +7,4 @@ The `encode` function and the `toArray` function are all you need. See `Example.
 
 Output:
 
-![Example output](/kizzx2/haskell-qrcode/raw/master/doc/hello.png)
+![Example output](/kizzx2/haskell-qrcode/blob/master/doc/hello.png)
