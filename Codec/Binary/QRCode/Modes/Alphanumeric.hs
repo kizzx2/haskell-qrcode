@@ -7,7 +7,7 @@ import Codec.Binary.QRCode.Spec
 import Data.Char
 
 chars :: String
-chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-.:"
+chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:"
 
 table :: [(Char, Int)]
 table = zip chars [0..44]
