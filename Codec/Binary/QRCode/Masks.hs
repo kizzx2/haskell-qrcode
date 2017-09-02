@@ -7,7 +7,6 @@ import Codec.Binary.QRCode.Placement
 import Codec.Binary.QRCode.Matrix
 
 import Control.Monad.Reader
-import Control.Applicative
 
 import Data.Function
 

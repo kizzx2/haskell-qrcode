@@ -11,7 +11,6 @@ import Data.Tuple
 import Data.List
 import qualified Data.Set as S
 
-import Control.Applicative
 import Control.Monad
 import Control.Monad.Reader
 
