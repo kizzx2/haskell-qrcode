@@ -8,7 +8,7 @@
 --
 -- An evolving QR Code encoder (and future decoder) in pure Haskell.
 --
--- Currently supports encoding 'Numeric' and 'Alphanumeric' data.
+-- Currently supports encoding 'Numeric', 'Alphanumeric', and 'EightBit' data.
 --
 -- Example
 --
@@ -27,7 +27,7 @@ module Codec.Binary.QRCode
     -- * Data Types
     , Matrix
     , Module(..)
-    , Mode(Numeric, Alphanumeric)
+    , Mode(Numeric, Alphanumeric, EightBit)
     , ErrorLevel(..)
     , Version
     ) where
@@ -41,6 +41,7 @@ import Codec.Binary.QRCode.Matrix
 
 import qualified Codec.Binary.QRCode.Modes.Numeric as N
 import qualified Codec.Binary.QRCode.Modes.Alphanumeric as A
+import qualified Codec.Binary.QRCode.Modes.EightBit as E
 import qualified Codec.Binary.QRCode.FormatInfo as F
 import qualified Codec.Binary.QRCode.VersionInfo as V
 
@@ -54,7 +55,8 @@ encode ver ecl mode input =
         inputEncode = case mode of
             Numeric -> N.encode
             Alphanumeric -> A.encode
-            _ -> undefined
+            EightBit -> E.encode
+            Kanji -> undefined
 
 encode' :: Version -> ErrorLevel -> BitStream -> Matrix
 encode' ver ecl encodedInput = final'
