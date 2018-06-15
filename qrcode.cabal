@@ -7,7 +7,7 @@ author:              Chris Yuen
 maintainer:          chris@kizzx2.com
 category:            Codec
 build-type:          Simple
-cabal-version:       >=1.6
+cabal-version:       >=1.8
 description:
     QR Code encoder (and future decoder) in pure Haskell.
 
@@ -38,3 +38,24 @@ library
 
   build-depends: base >= 4 && < 5, containers, array, mtl, vector
   ghc-options: -Wall
+
+test-suite qrcode-test
+  type: exitcode-stdio-1.0
+  main-is: test.hs
+  build-depends: base >= 4 && < 5, containers, array, mtl, vector,
+                 hedgehog, hedgehog-quickcheck, exceptions
+  ghc-options: -Wall -threaded -O2
+  hs-source-dirs: test, .
+  other-modules: Codec.Binary.QRCode,
+                 Codec.Binary.QRCode.Blocks,
+                 Codec.Binary.QRCode.FormatInfo,
+                 Codec.Binary.QRCode.GaloisField,
+                 Codec.Binary.QRCode.Masks,
+                 Codec.Binary.QRCode.Matrix,
+                 Codec.Binary.QRCode.Placement,
+                 Codec.Binary.QRCode.Spec,
+                 Codec.Binary.QRCode.Utils,
+                 Codec.Binary.QRCode.VersionInfo,
+                 Codec.Binary.QRCode.Modes.Numeric,
+                 Codec.Binary.QRCode.Modes.Alphanumeric,
+                 Codec.Binary.QRCode.Modes.EightBit
