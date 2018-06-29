@@ -1,3 +1,6 @@
+#!/usr/bin/env stack
+-- stack exec --package pgm runghc
+
 import Graphics.Pgm
 import Data.Maybe
 
