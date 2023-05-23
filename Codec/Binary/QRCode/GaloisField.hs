@@ -3,7 +3,7 @@ module Codec.Binary.QRCode.GaloisField where
 
 import Data.Bits
 
-import Numeric
+import Numeric hiding (readBin, showBin)
 import Data.Char
 
 import qualified Data.Map as M
